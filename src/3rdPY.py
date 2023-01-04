@@ -13,7 +13,7 @@ def sendemail(exportlist, runtime):
     Greeting = 'Good Morning, ' + greets + ' This result took ' + str(runtime) + ' to generate today' + '\n'
 
     if len(exportlist) == 0:
-        Greeting = "No Stock You can Buy, If you feel this is odd, Pls Reach out To nearest Max"
+        Greeting = "Stock Screener did not provide any quality stock pick for today."
         yagmail.SMTP('bigbullets133@gmail.com').send('alexxu98@gmail.com', str(date.today()) + '选股指标公式：操盘顾问',
                                                      Greeting)
     else:
