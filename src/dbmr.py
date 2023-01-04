@@ -17,8 +17,8 @@ def sendemail(exportlist,runtime):
     Greeting = 'Good Morning, '+greets+' This result took '+str(runtime)+' to generate today'+'\n'
 
     if len(exportlist) == 0:
-        Greeting = "No Stock You can Buy, If you feel this is odd, Pls Reach out To nearest Max"
-        yagmail.SMTP('bigbullets133@gmail.com').send('alexxu98@gmail.com', str(date.today())+'抄底公式2:底部买入', Greeting)
+        Greeting = "The Stock Screener has determined that there is no appropriate stock to buy"
+        yagmail.SMTP('sender@gmail.com').send('receiver@gmail.com', str(date.today())+'Stock Screen 1: KDrise', Greeting)
     else:
 
 
@@ -26,7 +26,7 @@ def sendemail(exportlist,runtime):
         sendlist.append(Greeting+'\n')
         for index, element in enumerate(exportlist):
             sendlist.append(str(index+1) + ". " + element +'\n')
-        yagmail.SMTP('bigbullets133@gmail.com').send('alexxu98@gmail.com', str(date.today()) + '抄底公式2:底部买入', sendlist)
+        yagmail.SMTP('sender@gmail.com').send('receiver@gmail.com', str(date.today()) + 'Stock Screen 1: KDrise', sendlist)
         """with open("dTodayPicks.txt","w") as wp:
             for index, element in enumerate(exportlist):
                 wp.writelines(str(index) + ". " + element)
@@ -35,14 +35,17 @@ def sendemail(exportlist,runtime):
             msg = MIMEText((fp.read()).hex())
             # me == the sender's email address
             # you == the recipient's email address"""
-    """msg['Subject'] = Greeting +'Here it is %s' % textfile
+    """
+    Alternative to Email Alert Sending
+    
+    msg['Subject'] = Greeting +'Here it is %s' % textfile
     msg['From'] = 'maxxu033@gmail.com'
     msg['To'] = ["alexxu98@gmail.com"]
 
         # Send the message via our own SMTP server, but don't include the
         # envelope header.
     s = smtplib.SMTP('localhost')
-    s.sendmail('maxxu033@gmail.com', ["alexxu98@gmail.com"], msg.as_string())
+    s.sendmail('sender.com', ["receiver.com"], msg.as_string())
     s.quit()
 """
 
@@ -92,4 +95,4 @@ else:
 
 
 
-print("DavidStock P2-1 抄底公式2:底部买入 花费了"+str(time.time()-start_time)+"运行")
+print("KDrise took "+str(time.time()-start_time)+" to run")
