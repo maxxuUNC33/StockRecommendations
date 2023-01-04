@@ -27,6 +27,9 @@ def sendemail(exportlist,runtime):
         for index, element in enumerate(exportlist):
             sendlist.append(str(index+1) + ". " + element +'\n')
         yagmail.SMTP('sender@gmail.com').send('receiver@gmail.com', str(date.today()) + 'Stock Screen 1: KDrise', sendlist)
+        
+        
+        
         """with open("dTodayPicks.txt","w") as wp:
             for index, element in enumerate(exportlist):
                 wp.writelines(str(index) + ". " + element)
@@ -39,8 +42,8 @@ def sendemail(exportlist,runtime):
     Alternative to Email Alert Sending
     
     msg['Subject'] = Greeting +'Here it is %s' % textfile
-    msg['From'] = 'maxxu033@gmail.com'
-    msg['To'] = ["alexxu98@gmail.com"]
+    msg['From'] = 'from@gmail.com'
+    msg['To'] = ["to@gmail.com"]
 
         # Send the message via our own SMTP server, but don't include the
         # envelope header.
