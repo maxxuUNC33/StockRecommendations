@@ -14,22 +14,22 @@ def sendemail(exportlist, runtime):
     Greeting = 'Good Morning, ' + greets + ' This result took ' + str(runtime) + ' to generate today' + '\n'
 
     if len(exportlist) == 0:
-        Greeting = "No Stock You can Buy, If you feel this is odd, Pls Reach out To nearest Max"
-        yagmail.SMTP('bigbullets133@gmail.com').send('alexxu98@gmail.com', str(date.today()) + '抄底公式2:KDJ 金叉买入', Greeting)
+        Greeting = "The Stock Screener strategy determined that there is no appropriate stock to buy."
+        yagmail.SMTP('sender@gmail.com').send('receiver@gmail.com', str(date.today()) + 'Stock Screen 2:KDJ corss', Greeting)
     else:
 
         sendlist = []
         sendlist.append(Greeting + '\n')
         for index, element in enumerate(exportlist):
             sendlist.append(str(index + 1) + ". " + element + '\n')
-        yagmail.SMTP('bigbullets133@gmail.com').send('alexxu98@gmail.com', str(date.today()) + '抄底公式2:KDJ 金叉买入', sendlist)
+        yagmail.SMTP('sender@gmail.com').send('receiver@gmail.com', str(date.today()) + 'Stock Screen 2:KDJ corss', sendlist)
 
 
 start_time = time.time()
 
 
 yf.pdr_override()
-start = dt.datetime(2022, 1, 1)
+start = dt.datetime(2022, 1, 1)  #date should be within 2 years, script takes too long otherwise
 now = dt.datetime.now()
 
 filepath="sp500.csv"
@@ -47,10 +47,10 @@ for i in stocklist.index:
         high_list.fillna(value=df['High'].expanding().max(), inplace=True)
         rsv = round((df['Close'] - low_list) / (high_list - low_list) * 100, 2)
 
-        df['K'] = round(rsv.ewm(com=2, adjust=False).mean(), 3)
-        df['D'] = round(df['K'].ewm(com=2, adjust=False).mean(), 3)
-        df['J'] = 3 * df['K'] - 2 * df['D']
-        df['P'] = round(df['D'].ewm(com=2, adjust=False).mean(), 3)
+        df['K'] = round(rsv.ewm(com=2, adjust=False).mean(), 3)               # get K line data of given day given stock
+        df['D'] = round(df['K'].ewm(com=2, adjust=False).mean(), 3)           # get D line data of given day given stock
+        df['J'] = 3 * df['K'] - 2 * df['D']                                   # get J line data of given day given stock
+        df['P'] = round(df['D'].ewm(com=2, adjust=False).mean(), 3)           # get P line data of given day given stock
         if (float(df['P'][-1]) < 30 and float(df['D'][-1]) >= float(df['P'][-1]) and float(df['D'][-2]) < float(df['P'][-2])):
             exportList.append(stock)
         if (df['J'][-1] < 65 and df['J'][-1] > df['D'][-1] and df['J'][-1] > df['K'][-1]) and (df['J'][-2] <= df['D'][-1] or df['J'][-2] <= df['K'][-2]):
@@ -79,4 +79,4 @@ else:
 
 sendemail(exportList,str(time.time()-start_time))
 
-print("DavidStock P2-1 抄底公式2:KDJ 金叉买入 花费了"+str(time.time()-start_time)+"运行")
+print("Stock Screen: KDJ cross took"+str(time.time()-start_time)+"to run")
